@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GS에너지 통신비 지원 신청</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f4f3ee;
+    --surface: #ffffff;
+    --surface2: #f9f8f5;
+    --border: #e2e0d8;
+    --border-strong: #c8c4b8;
+    --text-primary: #1a1916;
+    --text-secondary: #6b6860;
+    --text-muted: #9e9b93;
+    --accent: #1e5c3a;
+    --accent-light: #e8f2ec;
+    --accent-mid: #2d7a52;
+    --danger: #c0392b;
+    --danger-light: #fdf0ee;
+    --warning: #8a6500;
+    --warning-light: #fdf8e8;
+    --radius: 10px;
+    --radius-lg: 16px;
+    --shadow: 0 1px 4px rgba(0,0,0,0.07), 0 4px 16px rgba(0,0,0,0.05);
+    --shadow-md: 0 2px 8px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.06);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* Header */
+  .site-header {
+    background: var(--accent);
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    height: 60px;
+    gap: 16px;
+  }
+  .site-header .logo-mark {
+    width: 32px; height: 32px;
+    background: white;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 13px; color: var(--accent);
+    letter-spacing: -0.5px;
+  }
+  .site-header .logo-text {
+    color: white; font-size: 15px; font-weight: 600; letter-spacing: -0.3px;
+  }
+  .site-header .divider { width: 1px; height: 18px; background: rgba(255,255,255,0.3); margin: 0 4px; }
+  .site-header .system-name { color: rgba(255,255,255,0.85); font-size: 13px; font-weight: 400; }
+
+  /* Page layout */
+  .page-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  /* Page title */
+  .page-title-section {
+    margin-bottom: 32px;
+  }
+  .breadcrumb {
+    font-size: 12px; color: var(--text-muted); margin-bottom: 10px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .breadcrumb span { color: var(--text-muted); }
+  .page-title {
+    font-size: 26px; font-weight: 700; letter-spacing: -0.8px; color: var(--text-primary);
+    line-height: 1.2;
+  }
+  .page-subtitle { font-size: 14px; color: var(--text-secondary); margin-top: 6px; }
+
+  /* Progress bar */
+  .progress-bar-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px 28px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+  .step-item {
+    display: flex; align-items: center; flex: 1; gap: 0;
+  }
+  .step-dot-wrap { display: flex; align-items: center; gap: 10px; }
+  .step-dot {
+    width: 32px; height: 32px; border-radius: 50%;
+    border: 2px solid var(--border-strong);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 600; color: var(--text-muted);
+    background: white; flex-shrink: 0; transition: all 0.3s;
+  }
+  .step-dot.active { border-color: var(--accent); background: var(--accent); color: white; }
+  .step-dot.done { border-color: var(--accent); background: var(--accent); color: white; }
+  .step-label { font-size: 12px; font-weight: 500; color: var(--text-muted); white-space: nowrap; }
+  .step-label.active { color: var(--accent); font-weight: 600; }
+  .step-connector {
+    flex: 1; height: 2px; background: var(--border);
+    margin: 0 12px; min-width: 20px;
+  }
+  .step-connector.done { background: var(--accent); }
+
+  /* Notice box */
+  .notice-box {
+    background: var(--warning-light);
+    border: 1px solid #e8d88a;
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin-bottom: 24px;
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .notice-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .notice-text { font-size: 13px; color: var(--warning); line-height: 1.7; }
+  .notice-text strong { font-weight: 600; }
+
+  /* Card */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+  }
+  .card-title {
+    font-size: 15px; font-weight: 700; color: var(--text-primary);
+    margin-bottom: 20px; padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 8px;
+    letter-spacing: -0.3px;
+  }
+  .card-title-icon {
+    width: 28px; height: 28px; border-radius: 7px;
+    background: var(--accent-light); color: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+  }
+
+  /* Form grid */
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 24px; }
+  .form-full { grid-column: 1 / -1; }
+
+  .form-field label {
+    display: block; font-size: 12px; font-weight: 600;
+    color: var(--text-secondary); margin-bottom: 6px;
+    letter-spacing: 0.3px; text-transform: none;
+  }
+  .form-field label .required { color: var(--danger); margin-left: 2px; }
+
+  .form-field input,
+  .form-field select,
+  .form-field textarea {
+    width: 100%; padding: 10px 14px;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    font-family: inherit; font-size: 14px;
+    color: var(--text-primary);
+    background: white;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+  }
+  .form-field input:focus,
+  .form-field select:focus,
+  .form-field textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(30,92,58,0.1);
+  }
+  .form-field input[readonly] {
+    background: var(--surface2); color: var(--text-secondary);
+  }
+  .form-field textarea { resize: vertical; min-height: 80px; }
+  .form-field .hint { font-size: 11px; color: var(--text-muted); margin-top: 5px; }
+
+  /* Amount display */
+  .amount-display {
+    background: var(--accent-light);
+    border: 1px solid #b8d9c5;
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .amount-label { font-size: 13px; font-weight: 500; color: var(--accent); }
+  .amount-value { font-size: 18px; font-weight: 700; color: var(--accent); font-family: 'DM Mono', monospace; }
+
+  /* Expense table */
+  .expense-table { width: 100%; border-collapse: collapse; }
+  .expense-table th {
+    background: var(--surface2); font-size: 12px; font-weight: 600;
+    color: var(--text-secondary); padding: 10px 14px;
+    border: 1px solid var(--border); text-align: left;
+  }
+  .expense-table td {
+    padding: 10px 14px; border: 1px solid var(--border);
+    font-size: 13px; vertical-align: middle;
+  }
+  .expense-table td input, .expense-table td select {
+    width: 100%; border: none; background: transparent;
+    font-family: inherit; font-size: 13px; outline: none;
+    color: var(--text-primary);
+  }
+  .expense-table td input:focus { background: #f0f9f4; border-radius: 4px; }
+  .expense-table tr.total-row td {
+    background: var(--accent-light); font-weight: 600; color: var(--accent);
+  }
+
+  /* Add row button */
+  .add-row-btn {
+    margin-top: 10px;
+    background: none; border: 1px dashed var(--border-strong);
+    border-radius: var(--radius); padding: 10px; width: 100%;
+    font-family: inherit; font-size: 13px; color: var(--text-secondary);
+    cursor: pointer; transition: all 0.2s;
+  }
+  .add-row-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+
+  /* Delete row */
+  .del-btn {
+    background: none; border: none; color: var(--text-muted);
+    cursor: pointer; font-size: 16px; padding: 2px 6px;
+    border-radius: 4px; transition: all 0.15s;
+  }
+  .del-btn:hover { color: var(--danger); background: var(--danger-light); }
+
+  /* Support info table */
+  .support-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .support-table th {
+    background: var(--surface2); font-weight: 600; font-size: 12px;
+    color: var(--text-secondary); padding: 10px 14px;
+    border: 1px solid var(--border); text-align: center;
+  }
+  .support-table td {
+    padding: 10px 14px; border: 1px solid var(--border); text-align: center;
+  }
+  .support-table td:first-child { text-align: left; }
+  .badge {
+    display: inline-block; padding: 2px 10px;
+    border-radius: 20px; font-size: 11px; font-weight: 600;
+  }
+  .badge-full { background: var(--accent-light); color: var(--accent); }
+  .badge-partial { background: #e8f0fb; color: #1a56a0; }
+
+  /* Checkbox list */
+  .check-list { display: flex; flex-direction: column; gap: 10px; }
+  .check-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 12px 14px; border: 1px solid var(--border);
+    border-radius: var(--radius); cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .check-item:hover { border-color: var(--accent); background: var(--surface2); }
+  .check-item input[type="checkbox"] { margin-top: 2px; accent-color: var(--accent); flex-shrink: 0; }
+  .check-item-label { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+  .check-item-label strong { color: var(--text-primary); font-weight: 600; }
+
+  /* Category tags */
+  .tag-wrap { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+  .tag {
+    padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 500;
+    display: flex; align-items: center; gap: 5px;
+  }
+  .tag-ok { background: var(--accent-light); color: var(--accent); }
+  .tag-no { background: var(--danger-light); color: var(--danger); }
+
+  /* Bottom action bar */
+  .action-bar {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px 28px;
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 8px;
+    box-shadow: var(--shadow-md);
+    position: sticky;
+    bottom: 24px;
+  }
+  .action-bar-info { font-size: 13px; color: var(--text-secondary); }
+  .action-bar-info strong { color: var(--text-primary); }
+  .btn-group { display: flex; gap: 10px; }
+
+  .btn {
+    padding: 10px 24px; border-radius: var(--radius);
+    font-family: inherit; font-size: 14px; font-weight: 600;
+    cursor: pointer; border: none; transition: all 0.2s; letter-spacing: -0.2px;
+  }
+  .btn-ghost {
+    background: white; border: 1px solid var(--border-strong);
+    color: var(--text-secondary);
+  }
+  .btn-ghost:hover { border-color: var(--text-secondary); color: var(--text-primary); }
+  .btn-primary {
+    background: var(--accent); color: white;
+  }
+  .btn-primary:hover { background: var(--accent-mid); }
+  .btn-primary:disabled { background: var(--border-strong); cursor: not-allowed; }
+
+  /* Tabs */
+  .tab-wrap { display: flex; gap: 0; border-bottom: 2px solid var(--border); margin-bottom: 20px; }
+  .tab-btn {
+    padding: 10px 20px; background: none; border: none;
+    font-family: inherit; font-size: 13px; font-weight: 500;
+    color: var(--text-muted); cursor: pointer;
+    border-bottom: 2px solid transparent; margin-bottom: -2px;
+    transition: all 0.2s;
+  }
+  .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 700; }
+
+  /* Section separator */
+  .section-sep { margin: 6px 0 20px; }
+
+  /* Modal */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.4); z-index: 1000;
+    align-items: center; justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: white; border-radius: var(--radius-lg);
+    padding: 32px; max-width: 480px; width: 90%;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    animation: pop 0.2s ease;
+  }
+  @keyframes pop { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .modal-icon { font-size: 36px; margin-bottom: 16px; }
+  .modal-title { font-size: 18px; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.5px; }
+  .modal-body { font-size: 14px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 24px; }
+  .modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+
+  /* Success screen */
+  .success-screen { display: none; text-align: center; padding: 60px 20px; }
+  .success-screen.show { display: block; }
+  .success-icon { font-size: 56px; margin-bottom: 20px; }
+  .success-title { font-size: 24px; font-weight: 700; letter-spacing: -0.7px; margin-bottom: 10px; }
+  .success-sub { font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+  .success-card {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 20px 28px;
+    max-width: 400px; margin: 24px auto; text-align: left;
+  }
+  .success-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 13px; }
+  .success-row .sl { color: var(--text-muted); }
+  .success-row .sv { font-weight: 600; }
+
+  /* Form page display */
+  .form-page { display: none; }
+  .form-page.active { display: block; }
+
+  /* Info grid */
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .info-item { padding: 12px 16px; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius); }
+  .info-item-label { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+  .info-item-value { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+
+  @media (max-width: 600px) {
+    .page-wrap { padding: 24px 16px 100px; }
+    .card { padding: 20px 18px; }
+    .form-grid { grid-template-columns: 1fr; }
+    .info-grid { grid-template-columns: 1fr; }
+    .site-header { padding: 0 20px; }
+    .action-bar { flex-direction: column; gap: 12px; align-items: flex-start; }
+    .progress-bar-wrap { padding: 18px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="site-header">
+  <div class="logo-mark">GS</div>
+  <div class="logo-text">GS에너지</div>
+  <div class="divider"></div>
+  <div class="system-name">임직원 통신비 지원 신청</div>
+</header>
+
+<!-- Main -->
+<div class="page-wrap">
+
+  <!-- Title -->
+  <div class="page-title-section">
+    <div class="breadcrumb">
+      <span>인사/복지</span>
+      <span>›</span>
+      <span>통신비 지원 신청</span>
+    </div>
+    <div class="page-title">통신비 지원 신청서</div>
+    <div class="page-subtitle">전월 통신비에 대해 당월 신청 · 정산합니다</div>
+  </div>
+
+  <!-- Progress -->
+  <div class="progress-bar-wrap" id="progressBar">
+    <div class="step-item">
+      <div class="step-dot-wrap">
+        <div class="step-dot active" id="dot1">1</div>
+        <div class="step-label active" id="lbl1">신청자 정보</div>
+      </div>
+      <div class="step-connector" id="con1"></div>
+    </div>
+    <div class="step-item">
+      <div class="step-dot-wrap">
+        <div class="step-dot" id="dot2">2</div>
+        <div class="step-label" id="lbl2">통신비 내역</div>
+      </div>
+      <div class="step-connector" id="con2"></div>
+    </div>
+    <div class="step-item">
+      <div class="step-dot-wrap">
+        <div class="step-dot" id="dot3">3</div>
+        <div class="step-label" id="lbl3">유의사항 확인</div>
+      </div>
+      <div class="step-connector" id="con3"></div>
+    </div>
+    <div class="step-item">
+      <div class="step-dot-wrap">
+        <div class="step-dot" id="dot4">4</div>
+        <div class="step-label" id="lbl4">최종 제출</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notice -->
+  <div class="notice-box">
+    <div class="notice-icon">⚠️</div>
+    <div class="notice-text">
+      <strong>당월 미정산 시 지급 불가</strong>합니다. 반드시 해당 월 마감일 이전에 신청을 완료하여 주시기 바랍니다.<br>
+      소액결제, 콘텐츠 이용료(OTT, 게임 등)는 지원 대상에서 제외됩니다.
+    </div>
+  </div>
+
+  <!-- STEP 1: 신청자 정보 -->
+  <div class="form-page active" id="page1">
+
+    <!-- 지원 기준 안내 -->
+    <div class="card">
+      <div class="card-title">
+        <div class="card-title-icon">📋</div>
+        지원 대상 및 지원 금액
+      </div>
+      <table class="support-table">
+        <thead>
+          <tr>
+            <th>구분</th>
+            <th>대상</th>
+            <th>지원금액 (VAT 포함)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>임원 / 팀장</td>
+            <td>GS에너지 소속 임원, 팀장</td>
+            <td><span class="badge badge-full">전액 지원</span></td>
+          </tr>
+          <tr>
+            <td>사무직</td>
+            <td>GS에너지 소속 사무직 (정규직/계약직)</td>
+            <td><strong>월 88,000원</strong></td>
+          </tr>
+          <tr>
+            <td>운전직 / 비서업무직</td>
+            <td>GS에너지 소속 운전직, 비서업무직</td>
+            <td><strong>월 55,000원</strong></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div style="margin-top: 16px;">
+        <div style="font-size: 12px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px;">지원 항목</div>
+        <div class="tag-wrap">
+          <span class="tag tag-ok">✓ 월정액 요금 (휴대폰/워치/태블릿)</span>
+          <span class="tag tag-ok">✓ 업무 관련 프로그램</span>
+          <span class="tag tag-ok">✓ 휴대폰 보험료</span>
+          <span class="tag tag-ok">✓ 휴대폰 단말기 구입비</span>
+          <span class="tag tag-ok">✓ 로밍 비용 (해외출장)</span>
+        </div>
+        <div class="tag-wrap" style="margin-top: 6px;">
+          <span class="tag tag-no">✗ 콘텐츠 이용료 (OTT/게임)</span>
+          <span class="tag tag-no">✗ 소액결제</span>
+          <span class="tag tag-no">✗ 휴대폰 1대 초과 단말기</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 신청자 기본 정보 -->
+    <div class="card">
+      <div class="card-title">
+        <div class="card-title-icon">👤</div>
+        신청자 기본 정보
+      </div>
+      <div class="form-grid">
+        <div class="form-field">
+          <label>사번 <span class="required">*</span></label>
+          <input type="text" id="empId" placeholder="사번 입력" oninput="autoFillDept()">
+        </div>
+        <div class="form-field">
+          <label>성명 <span class="required">*</span></label>
+          <input type="text" id="empName" placeholder="홍길동">
+        </div>
+        <div class="form-field">
+          <label>부서명 <span class="required">*</span></label>
+          <input type="text" id="dept" placeholder="예) 52g팀">
+        </div>
+        <div class="form-field">
+          <label>직위/직책 <span class="required">*</span></label>
+          <select id="position" onchange="updateMaxAmount()">
+            <option value="">선택</option>
+            <option value="exec">임원</option>
+            <option value="leader">팀장</option>
+            <option value="office">사무직 (정규직/계약직)</option>
+            <option value="driver">운전직 / 비서업무직</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label>신청 대상 월 <span class="required">*</span></label>
+          <input type="month" id="targetMonth" value="">
+        </div>
+        <div class="form-field">
+          <label>통신사 <span class="required">*</span></label>
+          <select id="carrier">
+            <option value="">선택</option>
+            <option value="SKT">SKT</option>
+            <option value="KT">KT</option>
+            <option value="LGU">LG U+</option>
+          </select>
+          <div class="hint">SKT, KT, LG U+ 통신사에 한하여 지원됩니다.</div>
+        </div>
+        <div class="form-field">
+          <label>휴대폰 번호 <span class="required">*</span></label>
+          <input type="tel" id="phone" placeholder="010-0000-0000" oninput="formatPhone(this)">
+        </div>
+        <div class="form-field">
+          <label>지급 계좌번호</label>
+          <input type="text" id="account" placeholder="분리과금 불가 시 사용 (선택)">
+          <div class="hint">월 중 이벤트 발생 시 개인 펌뱅킹 계좌로 지급됩니다.</div>
+        </div>
+      </div>
+
+      <!-- 지원 한도 표시 -->
+      <div style="margin-top: 20px;" id="amountDisplayWrap" style="display:none;">
+        <div class="amount-display">
+          <div class="amount-label">내 지원 한도</div>
+          <div class="amount-value" id="maxAmountDisplay">—</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /page1 -->
+
+  <!-- STEP 2: 통신비 금액 입력 -->
+  <div class="form-page" id="page2">
+    <div class="card">
+      <div class="card-title">
+        <div class="card-title-icon">📱</div>
+        통신비 금액 입력
+      </div>
+
+      <!-- 안내 박스 -->
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;margin-bottom:24px;font-size:13px;color:var(--text-secondary);line-height:1.8;">
+        <div style="font-weight:600;color:var(--text-primary);margin-bottom:6px;">💡 입력 방법</div>
+        청구서의 <strong>통신비 총액</strong>에서 지원되지 않는 항목 금액을 빼고 입력해 주세요.<br>
+        <span style="color:var(--accent);font-weight:600;">신청금액 = 통신비 총액 − 미지원 항목 합계</span>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-field">
+          <label>통신비 총액 (원) <span class="required">*</span></label>
+          <input type="number" id="totalBill" placeholder="0" min="0" oninput="calcNet()">
+          <div class="hint">청구서 상 전체 통신비 금액</div>
+        </div>
+        <div class="form-field">
+          <label>미지원 항목 합계 (원)</label>
+          <input type="number" id="deduction" placeholder="0" min="0" oninput="calcNet()">
+          <div class="hint">콘텐츠 이용료, 소액결제 등 제외 금액 (없으면 0)</div>
+        </div>
+      </div>
+
+      <!-- 미지원 항목 태그 -->
+      <div style="margin:4px 0 20px;">
+        <div style="font-size:12px;font-weight:600;color:var(--text-muted);margin-bottom:8px;">미지원 항목 (해당 금액은 위에서 차감해 주세요)</div>
+        <div class="tag-wrap">
+          <span class="tag tag-no">✗ 콘텐츠 이용료 (OTT·음악·게임)</span>
+          <span class="tag tag-no">✗ 소액결제</span>
+          <span class="tag tag-no">✗ 휴대폰 1대 초과 단말기</span>
+        </div>
+      </div>
+
+      <!-- 계산 결과 -->
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;margin-bottom:20px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--text-secondary);padding-bottom:10px;border-bottom:1px dashed var(--border);">
+          <span>통신비 총액</span>
+          <span id="dispTotal" style="font-family:'DM Mono',monospace;color:var(--text-primary);">0원</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--danger);padding:10px 0;border-bottom:1px dashed var(--border);">
+          <span>미지원 항목 차감</span>
+          <span id="dispDeduct" style="font-family:'DM Mono',monospace;">− 0원</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;">
+          <span style="font-size:14px;font-weight:700;color:var(--accent);">신청금액</span>
+          <span id="dispNet" style="font-size:22px;font-weight:700;color:var(--accent);font-family:'DM Mono',monospace;">0원</span>
+        </div>
+      </div>
+
+      <div id="limitWarnBox" style="display:none;margin-bottom:16px;"></div>
+
+      <!-- 청구서 첨부 -->
+      <div class="form-field" style="margin-bottom:20px;">
+        <label>청구서 첨부 <span style="font-weight:400;color:var(--text-muted);">(선택)</span></label>
+        <div id="dropZone" onclick="document.getElementById('fileInput').click()"
+          style="border:2px dashed var(--border-strong);border-radius:var(--radius);padding:28px 20px;text-align:center;cursor:pointer;transition:all 0.2s;background:var(--surface2);"
+          ondragover="event.preventDefault();this.style.borderColor='var(--accent)';this.style.background='var(--accent-light)'"
+          ondragleave="this.style.borderColor='var(--border-strong)';this.style.background='var(--surface2)'"
+          ondrop="handleDrop(event)">
+          <div style="font-size:28px;margin-bottom:8px;">📎</div>
+          <div style="font-size:13px;font-weight:600;color:var(--text-secondary);">클릭하거나 파일을 여기에 끌어다 놓으세요</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">JPG, PNG, PDF 지원 · 최대 5MB</div>
+        </div>
+        <input type="file" id="fileInput" accept=".jpg,.jpeg,.png,.pdf" style="display:none" onchange="handleFileSelect(this)">
+
+        <!-- 첨부된 파일 미리보기 -->
+        <div id="filePreview" style="display:none;margin-top:12px;">
+          <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--accent-light);border:1px solid #b8d9c5;border-radius:var(--radius);">
+            <div style="font-size:24px;" id="fileIcon">📄</div>
+            <div style="flex:1;min-width:0;">
+              <div style="font-size:13px;font-weight:600;color:var(--accent);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" id="fileName"></div>
+              <div style="font-size:11px;color:var(--text-muted);" id="fileSize"></div>
+            </div>
+            <button onclick="removeFile()" style="background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:18px;padding:4px;" title="삭제">✕</button>
+          </div>
+          <div id="imgPreviewWrap" style="display:none;margin-top:8px;">
+            <img id="imgPreview" style="max-width:100%;max-height:200px;border-radius:var(--radius);border:1px solid var(--border);">
+          </div>
+        </div>
+      </div>
+
+      <!-- 특이사항 -->
+      <div class="form-field">
+        <label>특이사항 / 비고</label>
+        <textarea id="remark" placeholder="복직, 통신사 변경, 전화번호 변경, 해외출장 기간 등 특이사항이 있으면 입력해 주세요."></textarea>
+      </div>
+    </div>
+  </div><!-- /page2 -->
+
+  <!-- STEP 3: 유의사항 -->
+  <div class="form-page" id="page3">
+    <div class="card">
+      <div class="card-title">
+        <div class="card-title-icon">📜</div>
+        유의사항 및 확인
+      </div>
+
+      <div style="margin-bottom: 20px;">
+        <div style="font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 12px;">지원 원칙</div>
+        <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.8; background: var(--surface2); padding: 16px; border-radius: var(--radius); border: 1px solid var(--border);">
+          <ul style="padding-left: 18px; display: flex; flex-direction: column; gap: 6px;">
+            <li>SKT, KT, LG U+ 통신사에 한하여 <strong>통신사 분리과금 방식</strong>으로 지원합니다.</li>
+            <li>GS에너지 소속 임직원 대상이며, 지사/법인/파견지에서 통신비를 별도 지원받는 경우 대상에서 제외됩니다.</li>
+            <li>출산휴가(본인), 육아휴직, 병가, 휴직 등으로 <strong>1개월 이상 실근무 불가 시</strong> 지원 대상이 아닙니다.</li>
+            <li>해당 월 <strong>1일 이상 근무 시 전액 지원</strong>됩니다 (분리과금).</li>
+            <li>월 중 입사/퇴사, 휴직/복직, 전출/전입, 통신사 변경 등 발생 시 해당 월은 <strong>개인 펌뱅킹 계좌</strong>로 지급됩니다.</li>
+            <li>통신비는 <strong>금액 검증 없이 본인 신청 금액으로 지급</strong>되며, 신청 내용에 대한 책임은 본인에게 있습니다.</li>
+            <li>개인 불찰로 누락된 미지원 금액은 <strong>소급 지원하지 않습니다.</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 12px;">이하 사항을 확인하고 동의해 주세요</div>
+      <div class="check-list">
+        <label class="check-item">
+          <input type="checkbox" id="ck1" onchange="checkAllAgreed()">
+          <div class="check-item-label">
+            <strong>신청 내역의 정확성</strong><br>
+            본인이 신청하는 통신비 내역은 사실과 다름이 없으며, 허위 신청 시 발생하는 모든 책임은 본인에게 있음을 확인합니다.
+          </div>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" id="ck2" onchange="checkAllAgreed()">
+          <div class="check-item-label">
+            <strong>미지원 항목 미포함</strong><br>
+            소액결제, 콘텐츠 이용료(OTT·게임 등), 휴대폰 1대 초과 단말기 구입비 등 지원 제외 항목이 포함되지 않았음을 확인합니다.
+          </div>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" id="ck3" onchange="checkAllAgreed()">
+          <div class="check-item-label">
+            <strong>당월 정산 기한</strong><br>
+            전월 통신비를 당월 내 신청하지 않을 경우 소급 지급이 불가함을 이해하였습니다.
+          </div>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" id="ck4" onchange="checkAllAgreed()">
+          <div class="check-item-label">
+            <strong>개인정보 수집·이용 동의</strong><br>
+            통신비 지원을 위한 사번, 성명, 연락처, 계좌정보의 수집 및 이용에 동의합니다.
+          </div>
+        </label>
+      </div>
+    </div>
+  </div><!-- /page3 -->
+
+  <!-- STEP 4: 최종 제출 -->
+  <div class="form-page" id="page4">
+    <div class="card">
+      <div class="card-title">
+        <div class="card-title-icon">✅</div>
+        신청 내용 최종 확인
+      </div>
+      <div class="info-grid" id="reviewGrid"></div>
+
+      <div style="margin-top: 20px;">
+        <div style="font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 10px;">신청 내역</div>
+        <table class="support-table" id="reviewTable">
+          <thead>
+            <tr><th>항목</th><th>세부 내용</th><th>금액</th></tr>
+          </thead>
+          <tbody id="reviewBody"></tbody>
+          <tfoot>
+            <tr style="background:var(--accent-light);">
+              <td colspan="2" style="font-weight:600; color:var(--accent); padding: 10px 14px;">신청 합계</td>
+              <td style="font-weight:700; color:var(--accent); font-family:'DM Mono',monospace; padding: 10px 14px;" id="reviewTotal"></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <div style="margin-top: 20px; padding: 14px 16px; background: var(--warning-light); border: 1px solid #e8d88a; border-radius: var(--radius); font-size: 13px; color: var(--warning);">
+        ⚠️ 제출 후 수정이 불가합니다. 내용을 꼼꼼히 확인 후 제출해 주세요.
+      </div>
+    </div>
+  </div><!-- /page4 -->
+
+  <!-- 성공 화면 -->
+  <div class="success-screen" id="successScreen">
+    <div class="success-icon">🎉</div>
+    <div class="success-title">신청이 완료되었습니다</div>
+    <div class="success-sub">통신비 지원 신청서가 정상적으로 제출되었습니다.<br>검토 후 처리 결과를 안내드리겠습니다.</div>
+    <div class="success-card" id="successDetail"></div>
+    <button class="btn btn-primary" style="margin-top:16px;" onclick="resetForm()">새 신청서 작성</button>
+  </div>
+
+  <!-- Action bar -->
+  <div class="action-bar" id="actionBar">
+    <div class="action-bar-info" id="actionInfo">Step 1 / 4 — 신청자 정보를 입력해 주세요</div>
+    <div class="btn-group">
+      <button class="btn btn-ghost" id="btnPrev" onclick="prevStep()" style="display:none;">이전</button>
+      <button class="btn btn-primary" id="btnNext" onclick="nextStep()">다음 단계</button>
+    </div>
+  </div>
+
+</div><!-- /page-wrap -->
+
+<!-- Confirm Modal -->
+<div class="modal-overlay" id="submitModal">
+  <div class="modal">
+    <div class="modal-icon">📤</div>
+    <div class="modal-title">신청서를 제출하시겠습니까?</div>
+    <div class="modal-body">
+      제출 후에는 수정이 불가합니다.<br>신청 내용이 정확한지 다시 한번 확인해 주세요.
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">취소</button>
+      <button class="btn btn-primary" onclick="submitForm()">제출하기</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ★ Google Apps Script 배포 후 여기에 URL을 붙여넣으세요 ★
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz_5P5heNLHriTnYliOp3Irev6sXB23f5Ek4t9z21rbJ3gjtMfJLmwjztYlvPHJBHsMmg/exec";
+
+let currentStep = 1;
+const totalSteps = 4;
+
+// Init
+(function init() {
+  // Set target month to last month
+  const d = new Date();
+  d.setMonth(d.getMonth() - 1);
+  document.getElementById('targetMonth').value = d.toISOString().slice(0, 7);
+})();
+
+function updateStepUI() {
+  for (let i = 1; i <= totalSteps; i++) {
+    const dot = document.getElementById('dot' + i);
+    const lbl = document.getElementById('lbl' + i);
+    const con = document.getElementById('con' + i);
+    dot.className = 'step-dot' + (i < currentStep ? ' done' : i === currentStep ? ' active' : '');
+    lbl.className = 'step-label' + (i === currentStep ? ' active' : '');
+    if (con) con.className = 'step-connector' + (i < currentStep ? ' done' : '');
+  }
+
+  // Show/hide pages
+  for (let i = 1; i <= totalSteps; i++) {
+    document.getElementById('page' + i).classList.toggle('active', i === currentStep);
+  }
+
+  // Buttons
+  document.getElementById('btnPrev').style.display = currentStep > 1 ? '' : 'none';
+  const btnNext = document.getElementById('btnNext');
+  if (currentStep === totalSteps) {
+    btnNext.textContent = '제출하기';
+  } else {
+    btnNext.textContent = '다음 단계';
+  }
+
+  // Info text
+  const labels = ['신청자 정보', '통신비 내역', '유의사항 확인', '최종 제출'];
+  document.getElementById('actionInfo').innerHTML = `Step ${currentStep} / ${totalSteps} — <strong>${labels[currentStep-1]}</strong>`;
+}
+
+function nextStep() {
+  if (!validateStep(currentStep)) return;
+  if (currentStep === totalSteps) {
+    document.getElementById('submitModal').classList.add('open');
+    return;
+  }
+  if (currentStep === 3) buildReview();
+  currentStep++;
+  updateStepUI();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function prevStep() {
+  if (currentStep > 1) {
+    currentStep--;
+    updateStepUI();
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+}
+
+function validateStep(step) {
+  if (step === 1) {
+    if (!document.getElementById('empId').value.trim()) { alert('사번을 입력해 주세요.'); return false; }
+    if (!document.getElementById('empName').value.trim()) { alert('성명을 입력해 주세요.'); return false; }
+    if (!document.getElementById('dept').value.trim()) { alert('부서명을 입력해 주세요.'); return false; }
+    if (!document.getElementById('position').value) { alert('직위/직책을 선택해 주세요.'); return false; }
+    if (!document.getElementById('carrier').value) { alert('통신사를 선택해 주세요.'); return false; }
+    if (!document.getElementById('phone').value.trim()) { alert('휴대폰 번호를 입력해 주세요.'); return false; }
+  }
+  if (step === 2) {
+    const bill = parseInt(document.getElementById('totalBill').value) || 0;
+    if (bill <= 0) { alert('통신비 총액을 입력해 주세요.'); return false; }
+    const deduct = parseInt(document.getElementById('deduction').value) || 0;
+    if (deduct > bill) { alert('미지원 항목 합계가 총액보다 클 수 없습니다.'); return false; }
+  }
+  if (step === 3) {
+    for (let i = 1; i <= 4; i++) {
+      if (!document.getElementById('ck' + i).checked) {
+        alert('모든 항목에 동의해야 신청이 가능합니다.'); return false;
+      }
+    }
+  }
+  return true;
+}
+
+function updateMaxAmount() {
+  const pos = document.getElementById('position').value;
+  const wrap = document.getElementById('amountDisplayWrap');
+  const disp = document.getElementById('maxAmountDisplay');
+  wrap.style.display = pos ? '' : 'none';
+  const labels = { exec: '전액 지원', leader: '전액 지원', office: '88,000원/월', driver: '55,000원/월' };
+  disp.textContent = labels[pos] || '—';
+}
+
+function formatPhone(input) {
+  let v = input.value.replace(/\D/g, '');
+  if (v.length > 11) v = v.slice(0, 11);
+  if (v.length >= 8) v = v.replace(/(\d{3})(\d{4})(\d{0,4})/, '$1-$2-$3');
+  else if (v.length >= 4) v = v.replace(/(\d{3})(\d{0,4})/, '$1-$2');
+  input.value = v;
+}
+
+function calcNet() {
+  const total = parseInt(document.getElementById('totalBill').value) || 0;
+  const deduct = parseInt(document.getElementById('deduction').value) || 0;
+  const raw = Math.max(0, total - deduct);
+
+  const pos = document.getElementById('position').value;
+  const limits = { office: 88000, driver: 55000 };
+  const limit = limits[pos];
+  const net = (limit && raw > limit) ? limit : raw;
+  const capped = limit && raw > limit;
+
+  document.getElementById('dispTotal').textContent = total.toLocaleString() + '원';
+  document.getElementById('dispDeduct').textContent = '− ' + deduct.toLocaleString() + '원';
+  document.getElementById('dispNet').textContent = net.toLocaleString() + '원';
+
+  const box = document.getElementById('limitWarnBox');
+  if (capped) {
+    box.innerHTML = `<div class="notice-box" style="margin:0;background:#e8f2ec;border-color:#b8d9c5;"><div class="notice-icon">✅</div><div class="notice-text" style="color:var(--accent);">지원 한도(${limit.toLocaleString()}원)에 맞게 신청금액이 자동 조정되었습니다.</div></div>`;
+    box.style.display = '';
+  } else {
+    box.style.display = 'none';
+  }
+}
+
+function checkAllAgreed() {}
+
+function buildReview() {
+  const posMap = { exec: '임원', leader: '팀장', office: '사무직', driver: '운전직/비서업무직' };
+  const pos = document.getElementById('position').value;
+  const month = document.getElementById('targetMonth').value;
+  const [y, m] = month.split('-');
+  const total = parseInt(document.getElementById('totalBill').value) || 0;
+  const deduct = parseInt(document.getElementById('deduction').value) || 0;
+  const raw = Math.max(0, total - deduct);
+  const limitsR = { office: 88000, driver: 55000 };
+  const limitR = limitsR[pos];
+  const net = (limitR && raw > limitR) ? limitR : raw;
+
+  document.getElementById('reviewGrid').innerHTML = `
+    <div class="info-item"><div class="info-item-label">신청자</div><div class="info-item-value">${document.getElementById('empName').value} (${document.getElementById('empId').value})</div></div>
+    <div class="info-item"><div class="info-item-label">부서</div><div class="info-item-value">${document.getElementById('dept').value}</div></div>
+    <div class="info-item"><div class="info-item-label">직위/직책</div><div class="info-item-value">${posMap[pos] || ''}</div></div>
+    <div class="info-item"><div class="info-item-label">신청 대상 월</div><div class="info-item-value">${y}년 ${m}월</div></div>
+    <div class="info-item"><div class="info-item-label">통신사</div><div class="info-item-value">${document.getElementById('carrier').value}</div></div>
+    <div class="info-item"><div class="info-item-label">휴대폰 번호</div><div class="info-item-value">${document.getElementById('phone').value}</div></div>
+  `;
+
+  document.getElementById('reviewBody').innerHTML = `
+    <tr><td style="padding:10px 14px;">통신비 총액</td><td style="padding:10px 14px;">청구서 전체 금액</td><td style="padding:10px 14px;font-family:'DM Mono',monospace;">${total.toLocaleString()}원</td></tr>
+    <tr><td style="padding:10px 14px;color:var(--danger);">미지원 항목 차감</td><td style="padding:10px 14px;color:var(--danger);">콘텐츠이용료, 소액결제 등</td><td style="padding:10px 14px;font-family:'DM Mono',monospace;color:var(--danger);">− ${deduct.toLocaleString()}원</td></tr>
+  `;
+  document.getElementById('reviewTotal').textContent = net.toLocaleString() + '원';
+}
+
+function closeModal() {
+  document.getElementById('submitModal').classList.remove('open');
+}
+
+function collectFormData() {
+  const posMap = { exec: '임원', leader: '팀장', office: '사무직', driver: '운전직/비서업무직' };
+  const total = parseInt(document.getElementById('totalBill').value) || 0;
+  const deduct = parseInt(document.getElementById('deduction').value) || 0;
+  const raw = Math.max(0, total - deduct);
+  const limitsMap = { office: 88000, driver: 55000 };
+  const limitVal = limitsMap[document.getElementById('position').value];
+  const net = (limitVal && raw > limitVal) ? limitVal : raw;
+  const receiptNo = `TC-${new Date().getFullYear()}-${String(Math.floor(Math.random()*90000+10000))}`;
+  const month = document.getElementById('targetMonth').value.split('-');
+
+  return {
+    receiptNo,
+    submittedAt: new Date().toLocaleString('ko-KR'),
+    empId: document.getElementById('empId').value,
+    empName: document.getElementById('empName').value,
+    dept: document.getElementById('dept').value,
+    position: document.getElementById('position').value,
+    positionLabel: posMap[document.getElementById('position').value] || '',
+    carrier: document.getElementById('carrier').value,
+    phone: document.getElementById('phone').value,
+    targetMonth: `${month[0]}년 ${month[1]}월`,
+    account: document.getElementById('account').value,
+    remark: document.getElementById('remark').value,
+    totalBill: total,
+    deduction: deduct,
+    totalAmount: net,
+    fileName: attachedFile ? attachedFile.name : null,
+    fileBase64: attachedFileBase64 ? attachedFileBase64.split(',')[1] : null,
+    fileMimeType: attachedFile ? attachedFile.type : null
+  };
+}
+
+function showSuccess(data) {
+  document.getElementById('progressBar').style.display = 'none';
+  document.getElementById('actionBar').style.display = 'none';
+  for (let i = 1; i <= 4; i++) document.getElementById('page' + i).classList.remove('active');
+
+  document.getElementById('successDetail').innerHTML = `
+    <div class="success-row"><span class="sl">신청자</span><span class="sv">${data.empName} (${data.empId})</span></div>
+    <div class="success-row"><span class="sl">신청 대상 월</span><span class="sv">${data.targetMonth}</span></div>
+    <div class="success-row"><span class="sl">신청 금액</span><span class="sv">${data.totalAmount.toLocaleString()}원</span></div>
+    <div class="success-row"><span class="sl">접수 번호</span><span class="sv">${data.receiptNo}</span></div>
+    <div class="success-row"><span class="sl">제출 일시</span><span class="sv">${data.submittedAt}</span></div>
+  `;
+  document.getElementById('successScreen').classList.add('show');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+async function submitForm() {
+  closeModal();
+
+  const btnNext = document.getElementById('btnNext');
+  btnNext.disabled = true;
+  btnNext.textContent = '제출 중...';
+
+  const data = collectFormData();
+
+  // Apps Script URL이 설정된 경우 전송
+  if (APPS_SCRIPT_URL && APPS_SCRIPT_URL !== 'YOUR_APPS_SCRIPT_URL_HERE') {
+    try {
+      await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+    } catch (err) {
+      console.warn('전송 오류 (무시):', err);
+    }
+  }
+
+  showSuccess(data);
+}
+
+function resetForm() {
+  location.reload();
+}
+
+// 파일 첨부 관련
+let attachedFile = null;
+let attachedFileBase64 = null;
+
+function handleFileSelect(input) {
+  if (input.files && input.files[0]) processFile(input.files[0]);
+}
+
+function handleDrop(e) {
+  e.preventDefault();
+  document.getElementById('dropZone').style.borderColor = 'var(--border-strong)';
+  document.getElementById('dropZone').style.background = 'var(--surface2)';
+  if (e.dataTransfer.files && e.dataTransfer.files[0]) processFile(e.dataTransfer.files[0]);
+}
+
+function processFile(file) {
+  if (file.size > 5 * 1024 * 1024) { alert('파일 크기는 5MB 이하여야 합니다.'); return; }
+  const allowed = ['image/jpeg', 'image/png', 'application/pdf'];
+  if (!allowed.includes(file.type)) { alert('JPG, PNG, PDF 파일만 첨부 가능합니다.'); return; }
+
+  attachedFile = file;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    attachedFileBase64 = ev.target.result;
+    document.getElementById('fileName').textContent = file.name;
+    document.getElementById('fileSize').textContent = (file.size / 1024).toFixed(1) + ' KB';
+    document.getElementById('fileIcon').textContent = file.type === 'application/pdf' ? '📋' : '🖼️';
+    document.getElementById('filePreview').style.display = '';
+    document.getElementById('dropZone').style.display = 'none';
+    if (file.type !== 'application/pdf') {
+      document.getElementById('imgPreview').src = ev.target.result;
+      document.getElementById('imgPreviewWrap').style.display = '';
+    }
+  };
+  reader.readAsDataURL(file);
+}
+
+function removeFile() {
+  attachedFile = null;
+  attachedFileBase64 = null;
+  document.getElementById('fileInput').value = '';
+  document.getElementById('filePreview').style.display = 'none';
+  document.getElementById('imgPreviewWrap').style.display = 'none';
+  document.getElementById('dropZone').style.display = '';
+}
+
+// Init UI
+updateStepUI();
+</script>
+</body>
+</html>
